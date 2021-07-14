@@ -8,7 +8,11 @@ Best served with a bufferline plugin like [bufferline](https://github.com/akinsh
 
 Navigate to buffer 1 with `<LeaderKeyYouDefine>1`, navigate to buffer 2 with `<LeaderKeyYouDefine>2`, etc ...
 
-This plugin support mapping up to `<LeaderKeyYouDefine>9`
+This plugin support mapping up to `<LeaderKeyYouDefine>9`.
+
+### Use `:bwipeout` instead of `:bdelete` for removing buffer
+
+For this plugin to function properly, you need to **both unlist and delete** the buffer.  Therefore you need to use `:bwipeout` instead of `:bdelete` in your keybindings for deleting buffer.
 
 ## Installation
 
