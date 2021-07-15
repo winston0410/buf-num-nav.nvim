@@ -1,11 +1,12 @@
 local opts = {
 	leader = "<c-g>",
-    supported_modes = { "n", "v" }
+    supported_modes = { "n", "v", "i" }
 }
 
 local function jump_to_buf(buf_num)
     buf_num = tonumber(buf_num)
     local list = vim.api.nvim_list_bufs()
+    -- print('check buf list', vim.inspect(list))
     if buf_num > #list then
         return
     end
@@ -14,6 +15,9 @@ end
 
 local function setup(user_opts)
 	opts = vim.tbl_extend("force", opts, user_opts or {})
+    -- To wipe out ephemeral buffer without disturbe the cyclelist
+    -- https://github.com/neovim/neovim/issues/13429
+    vim.api.nvim_set_option("bufhidden", "wipe")
     for i=1,9 do
         for _, mode in ipairs(opts.supported_modes) do
             vim.api.nvim_set_keymap(mode, opts.leader .. i, "<cmd>lua require('buf-num-nav').jump_to_buf('" .. i .. "')<cr>", { silent = true, noremap = true })
