@@ -1,6 +1,7 @@
 local opts = {
 	leader = "<c-g>",
-    supported_modes = { "n", "v", "i" }
+    -- Enable this binding in all modes by default
+    supported_modes = { "n", "v", "i", "o", "c", "t" }
 }
 
 local function jump_to_buf(buf_num)
@@ -17,7 +18,7 @@ local function setup(user_opts)
 	opts = vim.tbl_extend("force", opts, user_opts or {})
     -- To wipe out ephemeral buffer without disturbe the cyclelist
     -- https://github.com/neovim/neovim/issues/13429
-    vim.o.bufhidden = "wipe"
+    -- vim.o.bufhidden = "wipe"
     for i=1,9 do
         for _, mode in ipairs(opts.supported_modes) do
             vim.api.nvim_set_keymap(mode, opts.leader .. i, "<cmd>lua require('buf-num-nav').jump_to_buf('" .. i .. "')<cr>", { silent = true, noremap = true })
