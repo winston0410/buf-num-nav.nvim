@@ -17,7 +17,13 @@ local function jump_to_buf(buf_num)
 		return
 	end
 
-	vim.api.nvim_set_current_buf(list[buf_num])
+	-- vim.schedule_wrap(function()
+		-- vim.api.nvim_set_current_buf(list[buf_num])
+	-- end)
+
+    -- TODO: Investigate how to override the textlock to get the behavior of :buffer!
+	-- vim.api.nvim_set_current_buf(list[buf_num])
+	vim.cmd("buffer! " .. list[buf_num])
 end
 
 local function setup(user_opts)
