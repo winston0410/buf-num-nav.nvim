@@ -2,6 +2,10 @@ local opts = {
 	leader = "<c-g>",
 	create_buffer = "c",
 	remove_buffer = "q",
+    commands = {
+        bufdelete = "bdelete",
+        buffer = "buffer!"
+    },
 	-- Enable this binding in all modes by default
 	supported_modes = { "n", "v", "i", "o", "c", "t" },
 }
@@ -23,11 +27,11 @@ local function jump_to_buf(buf_num)
 
     -- TODO: Investigate how to override the textlock to get the behavior of :buffer!
 	-- vim.api.nvim_set_current_buf(list[buf_num])
-	vim.cmd("buffer! " .. list[buf_num])
+	vim.cmd(opts.commands.buffer .. " " .. list[buf_num])
 end
 
 local function setup(user_opts)
-	opts = vim.tbl_extend("force", opts, user_opts or {})
+	opts = vim.tbl_deep_extend("force", opts, user_opts or {})
 	for i = 1, 9 do
 		for _, mode in ipairs(opts.supported_modes) do
 			vim.api.nvim_set_keymap(
@@ -45,7 +49,7 @@ local function setup(user_opts)
 			vim.api.nvim_set_keymap(
 				mode,
 				opts.leader .. opts.remove_buffer,
-				"<cmd>bdelete<cr>",
+				"<cmd>" .. opts.commands.bufdelete .. "<cr>",
 				{ silent = true, noremap = true }
 			)
 		end
